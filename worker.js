@@ -24,20 +24,24 @@ export default {
         }
       );
 
-      return new Response(await response.text(), {
-        status: response.status,
-        headers: {
-          "Content-Type": "application/json"
-        }
+      const result = await response.json();
+
+      return Response.json({
+        ...result,
+        developer: "𝑻𝒆𝒂𝒎 𝑴𝒂𝒓𝒐",
+        powered_by: "Team Maro API"
+      }, {
+        status: response.status
       });
+
     } catch (error) {
-      return Response.json(
-        {
-          success: false,
-          error: error.toString()
-        },
-        { status: 500 }
-      );
+      return Response.json({
+        ok: false,
+        error: "API Error",
+        developer: "𝑻𝒆𝒂𝒎 𝑴𝒂𝒓𝒐"
+      }, {
+        status: 500
+      });
     }
   }
 };
